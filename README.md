@@ -8,12 +8,12 @@ for the demo. Use the files within DSC_Configs as the DSC configurations for the
 
 ### Demo Overview
 
-1. Create Lab Environment with LabBuilder.
-2. Add Collector node to Event Log Readers Active Directory group.
-3. Configure Log Access Group Policy.
-4. Enable Auditing on Domain Controllers via Group Policy.
-5. Restart Domain Controllers to apply new Group Policies.
-6. Deploy xWindowsEventForwarding DSC Configuration to Collector node.
+1. [Create Lab Environment with LabBuilder](http://duffney.github.io/Creating-Labs-with-LabBuilder/)
+2. Add Collector node to Event Log Readers Active Directory group
+3. Configure Log Access Group Policy
+4. Enable Auditing on Domain Controllers via Group Policy
+5. Restart Domain Controllers to apply new Group Policies
+6. Deploy xWindowsEventForwarding DSC Configuration to Collector node
 7. Review Event Log Subscription
 8. Prep New Domain Controller
 9. Promote New Domain Controller with DSC
