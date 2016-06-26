@@ -1,0 +1,19 @@
+https://blogs.technet.microsoft.com/askds/2011/08/29/the-security-log-haystack-event-forwarding-and-you/
+https://blogs.technet.microsoft.com/askds/2011/08/29/the-security-log-haystack-event-forwarding-and-you/
+https://github.com/PowerShell/xWindowsEventForwarding
+
+wecutil documentation
+https://msdn.microsoft.com/en-us/library/bb736545(v=vs.85).aspx
+https://technet.microsoft.com/en-us/library/cc753183(v=ws.11).aspx
+
+cmd /c wecutil gs adsecurity
+cmd /c wecutil ds ADSecurity 
+cmd /c wecutil es
+
+wevtutil sl security /ca:O:BAG:SYD:(A;;0xf0005;;;SY)(A;;0x5;;;BA)(A;;0x1;;;S-1-5-32-573)(A;;0x1;;;S-1-5-20)
+O:BAG:SYD:(A;;0xf0005;;;SY)(A;;0x5;;;BA)(A;;0x1;;;S-1-5-32-573)(A;;0x1;;;S-1-5-20)
+Demo pseudo code
+
+1. Add Collector to event log readers group
+2. Create GPO to grant network service account read access & change aduit settinggs
+3. Review and execute DSC configuration on collector

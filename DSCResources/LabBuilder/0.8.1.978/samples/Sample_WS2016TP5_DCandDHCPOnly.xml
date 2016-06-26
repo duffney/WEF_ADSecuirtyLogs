@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<labbuilderconfig xmlns="labbuilderconfig"
+                  name="Sample_WS2016TP5_DCandDHCPOnly"
+                  version="1.0">
+  <description>Sample Windows Server 2016 TP5 Lab Configuration DC and DHCP Only</description>
+
+  <settings labid="LABBUILDER-WS2016TP5.COM"
+            domainname="LABBUILDER-WS2016TP5.COM"
+            email="admin@LABBUILDER-WS2016TP5.COM"
+            labpath="c:\vm\LABBUILDER-WS2016TP5.COM"
+            dsclibrarypath="..\DSCLibrary\" />
+
+  <resources>
+  </resources>
+
+  <switches>
+    <switch name="External" type="External">
+      <adapters>
+        <adapter name="Cluster" macaddress="00155D010701" />
+        <adapter name="Management" macaddress="00155D010702" />
+        <adapter name="SMB" macaddress="00155D010703" />
+        <adapter name="LM" macaddress="00155D010704" />
+      </adapters>
+    </switch>
+    <switch name="General Purpose Internal" type="Internal" /> 
+    <switch name="Domain Private Site A" type="Private" vlan="2" />
+    <switch name="Domain Private Site B" type="Private" vlan="3" />
+    <switch name="Domain Private Site C" type="Private" vlan="4" />
+  </switches>
+
+  <templatevhds isopath="ISOFiles" 
+                vhdpath="VHDFiles" 
+                prefix="Template " >
+    <templatevhd name="Windows Server 2016 TP5 Datacenter FULL"
+                 iso="14300.1000.160324-1723.RS1_RELEASE_SVC_SERVER_OEMRET_X64FRE_EN-US.ISO"
+                 url="https://www.microsoft.com/en-us/evalcenter/evaluate-windows-server-technical-preview"
+                 vhd="Windows Server 2016 TP5 Datacenter Full.vhdx"
+                 edition="Windows Server 2016 Technical Preview 5 SERVERDATACENTER"
+                 ostype="Server"
+                 vhdformat="vhdx" 
+                 vhdtype="dynamic" 
+                 generation="2" 
+                 vhdsize="40GB" />
+    <templatevhd name="Windows Server 2016 TP5 Datacenter CORE"
+                 iso="14300.1000.160324-1723.RS1_RELEASE_SVC_SERVER_OEMRET_X64FRE_EN-US.ISO"
+                 url="https://www.microsoft.com/en-us/evalcenter/evaluate-windows-server-technical-preview"
+                 vhd="Windows Server 2016 TP5 Datacenter Core.vhdx"
+                 edition="Windows Server 2016 Technical Preview 5 SERVERDATACENTERCORE"
+                 ostype="Server"
+                 vhdformat="vhdx" 
+                 vhdtype="dynamic" 
+                 generation="2" 
+                 vhdsize="25GB" />
+    <templatevhd name="Nano Server 2016 TP5 Basic"
+                 iso="14300.1000.160324-1723.RS1_RELEASE_SVC_SERVER_OEMRET_X64FRE_EN-US.ISO"
+                 url="https://www.microsoft.com/en-us/evalcenter/evaluate-windows-server-technical-preview"
+                 vhd="Nano Server 2016 TP5 Basic.vhdx"
+                 edition="Windows Server 2016 Technical Preview 5 SERVERDATACENTERNANO"
+                 ostype="Nano"
+                 packages="Microsoft-NanoServer-Guest-Package.cab"
+                 vhdformat="vhdx" 
+                 vhdtype="dynamic" 
+                 generation="2"
+                 vhdsize="25GB" />
+  </templatevhds>
+  
+  <templates>
+    <template name="Template Windows Server 2016 TP5 Datacenter FULL"
+              templatevhd="Windows Server 2016 TP5 Datacenter FULL"
+              memorystartupbytes="1GB"
+              processorcount="1"
+              administratorpassword="P@ssword!1"
+              timezone="New Zealand Standard Time" 
+              ostype="Server" />
+    <template name="Template Windows Server 2016 TP5 Datacenter CORE"
+              templatevhd="Windows Server 2016 TP5 Datacenter CORE"
+              memorystartupbytes="1GB"
+              processorcount="1"
+              administratorpassword="P@ssword!1"
+              timezone="New Zealand Standard Time" 
+              ostype="Server" />
+    <template name="Template Nano Server 2016 TP5 Basic"
+              templatevhd="Nano Server 2016 TP5 Basic"
+              memorystartupbytes="2GB"
+              processorcount="1"
+              administratorpassword="P@ssword!1"
+              timezone="New Zealand Standard Time" 
+              ostype="Client" />
+  </templates>
+
+  <vms>   
+    <vm name="SA-DC1"
+        template="Template Windows Server 2016 TP5 Datacenter FULL"
+        computername="SA-DC1">
+      <dsc configname="DC_FORESTPRIMARY"
+           configfile="DC_FORESTPRIMARY.DSC.ps1">
+        <parameters>
+          DomainName = "LABBUILDER.COM"
+          DomainAdminPassword = "P@ssword!1"
+          Forwarders = @('8.8.8.8','8.8.4.4')
+        </parameters>
+      </dsc>
+      <adapters>
+        <adapter name="External"
+                 switchname="External" />
+        <adapter name="Domain Private Site A"
+                 switchname="Domain Private Site A">
+          <ipv4 address="192.168.128.10"
+                defaultgateway="192.168.128.19"
+                subnetmask="24"
+                dnsserver="192.168.128.10"/>
+          <ipv6 address="fd53:ccc5:895a:bc00::a"
+                defaultgateway="fd53:ccc5:895a:bc00::13"
+                subnetmask="64"
+                dnsserver="fd53:ccc5:895a:bc00::a"/>
+        </adapter>
+      </adapters>
+    </vm>
+
+    <vm name="SA-DHCP1"
+        template="Template Windows Server 2016 TP5 Datacenter CORE"
+        computername="SA-DHCP1" >
+      <dsc configname="MEMBER_DHCP"
+           configfile="MEMBER_DHCP.DSC.ps1">
+        <parameters>
+          DomainName = "LABBUILDER.COM"
+          DomainAdminPassword = "P@ssword!1"
+          DCName = "SA-DC1"
+          PSDscAllowDomainUser = $True
+        </parameters>
+      </dsc>
+      <adapters>
+        <adapter name="External"
+                 switchname="External" />
+        <adapter name="Domain Private Site A"
+                 switchname="Domain Private Site A">
+          <ipv4 address="192.168.128.16"
+                defaultgateway="192.168.128.19"
+                subnetmask="24"
+                dnsserver="192.168.128.10,192.168.128.11"/>
+          <ipv6 address="fd53:ccc5:895a:bc00::10"
+                defaultgateway="fd53:ccc5:895a:bc00::13"
+                subnetmask="64"
+                dnsserver="fd53:ccc5:895a:bc00::a,fd53:ccc5:895a:bc00::b"/>
+        </adapter>
+      </adapters>
+    </vm>
+  </vms>
+
+</labbuilderconfig>
