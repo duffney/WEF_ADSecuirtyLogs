@@ -10,7 +10,7 @@ Get-ADGroupMember -Identity 'Event Log Readers'
 Start-Process C:\windows\system32\gpmc.msc
 
 <#
-Configur Log Access
+Configure Log Access
 Computer Management > Preferences > Administrative Template > Windows Component > Event Log Service > Security > Configure log Access
 Value: O:BAG:SYD:(A;;0xf0005;;;SY)(A;;0x5;;;BA)(A;;0x1;;;S-1-5-32-573)(A;;0x1;;;S-1-5-20)
 
@@ -76,7 +76,7 @@ if ($Subs -contains 'ADSecurity'){
 $EventSources = cmd /c wecutil gs adsecurity | Select-String -SimpleMatch "Address" | % {($_).tostring().split(':')[1].trim()}
 $DCs = (Get-ADDomainController -filter *).HostName
 
-if ((Compare-Object $DCs $EventSources).length -eq 0){
+if ((Compare-Object $DCs $EventSources).length -ne 0){
     Write-Output "Removing Subscription [ADSecurity]"
     cmd /c wecutil ds ADSecurity
 }

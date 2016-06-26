@@ -1,5 +1,4 @@
 https://blogs.technet.microsoft.com/askds/2011/08/29/the-security-log-haystack-event-forwarding-and-you/
-https://blogs.technet.microsoft.com/askds/2011/08/29/the-security-log-haystack-event-forwarding-and-you/
 https://github.com/PowerShell/xWindowsEventForwarding
 
 wecutil documentation
