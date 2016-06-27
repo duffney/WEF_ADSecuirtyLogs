@@ -26,12 +26,9 @@ for the demo. Use the files within DSC_Configs as the DSC configurations for the
 
 ### Requirements
 
-PowerShell Version 5
-
-Hyper-V
-
-
-DSCResources: LabBuilder,xWindowsEventForwarding,xActiveDirectory (All found in DSCResources folder)
+1. PowerShell Version 5
+2. Hyper-V
+3. DSCResources: LabBuilder,xWindowsEventForwarding,xActiveDirectory (All found in DSCResources folder)
 
 
 ISOFiles: [WindowsServer 2016 TP5](https://www.microsoft.com/en-us/evalcenter/evaluate-windows-server-technical-preview)
