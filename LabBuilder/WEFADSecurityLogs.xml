@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <labbuilderconfig xmlns="labbuilderconfig" name="WEFADSecurityLogs" version="1.0">
 <description></description>
-<settings labpath="G:\WEFADSecurityLogs" />
+<settings labpath="C:\WEFADSecurityLogs" />
 <resources>     
 	<msu name="WMF5.0-WS2012R2-W81" url="https://download.microsoft.com/download/2/C/6/2C6E1B4A-EBE5-48A6-B225-2D2058A9CEFB/Win8.1AndW2K12R2-KB3134758-x64.msu" />
 	<msu name="WMF5.0-WS2012-W8" url="https://download.microsoft.com/download/2/C/6/2C6E1B4A-EBE5-48A6-B225-2D2058A9CEFB/W2K12-KB3134759-x64.msu" />

@@ -19,6 +19,11 @@ for the demo. Use the files within DSC_Configs as the DSC configurations for the
 9. Promote New Domain Controller with DSC
 10. Update Event Log Subscription
 
+### How to Use
+1. Use LabBuilder_KickStart.ps1 to create the Lab Environment. [LabBuilder\LabBuilder_KickStart.ps1]
+2. Use Demo.ps1 to walk through the demo.
+
+
 ### Requirements
 
 PowerShell Version 5
