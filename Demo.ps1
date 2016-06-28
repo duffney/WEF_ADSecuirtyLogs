@@ -23,7 +23,7 @@ $DCs = (Get-ADDomainController -filter *).Name
 $DCs | % {Restart-Computer -ComputerName $_ -Wait -For PowerShell -Force}
 
 #Install xWindowsEventForwarding
-Install-Module xWindowsEventForwarding -Confirm:$false
+if (-not (Get-Module xWindowsEventForwarding -ListAvailable)){Install-Module xWindowsEventForwarding -Confirm:$false}
 
 psedit c:\scripts\Collector.ps1
 
@@ -47,7 +47,7 @@ Export-Certificate -Cert $Cert -FilePath $env:systemdrive:\Certs\DC3.cer -Force
 $params =@{
     Path = (Get-Module xActiveDirectory -ListAvailable).ModuleBase
     Destination = "$env:SystemDrive\Program Files\WindowsPowerShell\Modules\xActiveDirectory"
-    ToSession = $Session
+    ToSession = (New-PSSession -ComputerName DC3)
     Force = $true
     Recurse = $true
     Verbose = $true
